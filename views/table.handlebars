@@ -1,0 +1,26 @@
+<h1><center>Customers Data</center></h1>
+<table id="maintable" class="table table-striped table-bordered" style="width:100%">
+    <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Full Name</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Item</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-center">Total Price</th>
+    </tr>
+    {{#each title}}
+    <tr>
+        <td align="center">{{ id }}</td>
+        <td align="center">{{ firstname }} {{ lastname }}</td>
+        <td align="center">{{ email }}</td>
+        <td align="center">{{ item }}</td>
+        <td align="center">{{ quantity }}</td>
+        <td align="center">{{ total_price }}</td>
+    </tr>
+    {{/each}}
+</table>
+</br>
+<div style="text-align: center;">
+    <a href="/"><button>HOME</button></a>
+    <a href="/pivot"><button>PIVOT</button></a>
+</div>

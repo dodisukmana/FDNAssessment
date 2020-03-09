@@ -1,0 +1,24 @@
+<h1><center>Customers Data (PIVOT)</center></h1>
+<table id="maintable" class="table table-striped table-bordered" style="width:100%">
+    <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Barang1</th>
+        <th>Barang2</th>
+        <th>Barang3</th>
+    </tr>
+    {{#each title}}
+    <tr>
+        <td>{{ fullname }}</td>
+        <td>{{ email }}</td>
+        <td>{{ barang1 }}</td>
+        <td>{{ barang2 }}</td>
+        <td>{{ barang3 }}</td>
+    </tr>
+    {{/each}}
+</table>
+</br>
+<div style="text-align: center;">
+    <a href="/table"><button>BACK</button></a>
+    <a href="/"><button>HOME</button></a>
+</div>

@@ -1,0 +1,120 @@
+<h1><center>API Social Plugins</center></h1>
+
+<div style="text-align: center;">
+    <fb:login-button
+        id="fb-btn" 
+        scope="public_profile,email"
+        onlogin="checkLoginState();">
+    </fb:login-button>
+    <div style="text-align: left;" id="profile"></div>
+    </br>
+    <div style="text-align: left;" id="feed"></div>
+    </br>
+    <a href="/"><button>HOME</button></a>
+    <a id="logout" href="#" onclick="logout()"><button>LOGOUT</button></a>
+</div>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '682328139189819',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v6.0'
+        });
+      
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function statusChangeCallback(response){
+         if(response.status === 'connected'){
+           console.log('Logged in and authenticated');
+           setElements(true);
+           feedData();
+         } else {
+           console.log('Not authenticated');
+           setElements(false);
+         }
+    }
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function feedData(){
+        FB.api('me?fields=name,email,location',function(response){
+            if(response && !response.error){
+                fetchProfile(response);
+                }
+            
+                FB.api('me/feed',function(response){
+                if(response && !response.error){
+                    fetchData(response);
+                }
+            });
+        });
+    }
+
+    function fetchProfile(user){
+        let profile = `
+          <h3>${user.name}</h3>
+          <div> User ID: ${user.id} </div>
+          <div> Email: ${user.email} </div>
+          <div> Location: ${user.location.name} </div>
+        `;
+        document.getElementById('profile').innerHTML = profile;
+    }
+
+    
+
+    function fetchData(feed){
+        let output = '<h3>Latest Posts</h3>';
+        for(let i in feed.data){
+            if(feed.data[i].message){
+                output += `
+                    <div>
+                        ${feed.data[i].message} <span>${feed.data[i].created_time}</span>
+                    </div>
+                `;
+            }
+        }
+        document.getElementById('feed').innerHTML = output;
+        const a = $.get(feed.paging.next, "json");
+        var obj = JSON.parse(a);
+        console.log(obj);
+    }
+    
+    function setElements(isLoggedIn){
+        if(isLoggedIn){
+            $("#fb-btn").hide();
+            $("#logout").show();
+            $("#profile").show();
+            $("#feed").show();
+        }
+        else{
+            $("#fb-btn").show();
+            $("#logout").hide();
+            $("#profile").hide();
+            $("#feed").hide();
+        }
+    }
+
+    function logout(){
+        FB.logout(function(response){
+          setElements(false);
+        });
+    }
+
+</script>
