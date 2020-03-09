@@ -11,8 +11,9 @@ npm install -D handlebars@4.5.0
 
 # Serve on localhost:3000
 npm start
-# Dev Server (Nodemon)
-npm run dev
+
+# Facebook API App ID Config on views/facebook.handlebars
+change this => appId      : '{your-app-id}'
 ```
 
 ## Author
