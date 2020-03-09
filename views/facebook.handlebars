@@ -91,9 +91,6 @@
             }
         }
         document.getElementById('feed').innerHTML = output;
-        const a = $.get(feed.paging.next, "json");
-        var obj = JSON.parse(a);
-        console.log(obj);
     }
     
     function setElements(isLoggedIn){
